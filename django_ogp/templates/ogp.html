@@ -1,1 +1,1 @@
-{% for property, content in ogp_infos.items %}<meta property="og:{{ property }}" content="{{ content }}" />{% endfor %}
+{% for property, content in ogp_infos.items %}{% if content %}<meta property="og:{{ property }}" content="{{ content }}" />{% endif %}{% endfor %}

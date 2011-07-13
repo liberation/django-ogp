@@ -87,7 +87,7 @@ Will produce:
     <body>foo</body>
     </html>
 
-Pro tip, you can probably reuse existing methods on your models:
+Pro tip, you can probably reuse existing methods in your models:
 
     class MyExistingModel(models.Model):
         def __unicode__(self):
@@ -100,6 +100,10 @@ Pro tip, you can probably reuse existing methods on your models:
         
         def ogp_url(self):
             return settings.BASE_URL + self.get_absolute_url()
+        
+        def ogp_image(self):
+            if not self.image:
+                return None  # will not render the meta tag in the template
 
 And so on.
 

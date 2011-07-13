@@ -36,6 +36,11 @@ class OGPCompleteTestModel(OGPTestModel):
         return 800
 
 
+class OGPNoneTestModel(OGPTestModel):
+    def ogp_description(self):
+        return None
+
+
 class OGPTest(TestCase):
     def test_ogp_rendering(self):
         """
@@ -49,3 +54,5 @@ class OGPTest(TestCase):
                         Template("{% load ogp_tags %}{% render_ogp item %}").render(Context({'item': OGPTestModel()})))
         self.assertEqual(u'<meta property="og:title" content="The Rock" /><meta property="og:url" content="http://www.imdb.com/title/tt0117500/" /><meta property="og:image" content="http://ia.media-imdb.com/images/rock.jpg" /><meta property="og:longitude" content="-122.153013" /><meta property="og:video:height" content="800" /><meta property="og:video:width" content="1024" /><meta property="og:latitude" content="37.416343" /><meta property="og:type" content="movie" />', 
                         Template("{% load ogp_tags %}{% render_ogp item %}").render(Context({'item': OGPCompleteTestModel()})))
+        self.assertEqual(u'<meta property="og:url" content="http://www.imdb.com/title/tt0117500/" /><meta property="og:image" content="http://ia.media-imdb.com/images/rock.jpg" /><meta property="og:type" content="movie" /><meta property="og:title" content="The Rock" />', 
+                        Template("{% load ogp_tags %}{% render_ogp item %}").render(Context({'item': OGPNoneTestModel()})))
