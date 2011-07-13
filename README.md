@@ -34,7 +34,7 @@ Will produce:
 
 Now you probably wonder where all this content comes from. 
 Given that the __item__ object is an instance of a class (let's say a model),
-you have to put an __ogp_enabled___ attribute on it and define methods starting with ogp_*:
+you have to put an __ogp\_enabled__ attribute on it and define methods starting with ogp\_*:
 
     class MyModel(models.Model):
         # Fields
@@ -86,6 +86,22 @@ Will produce:
     </head>
     <body>foo</body>
     </html>
+
+Pro tip, you can probably reuse existing methods on your models:
+
+    class MyExistingModel(models.Model):
+        def __unicode__(self):
+            return u'%(first_name)s %(last_name)s' % self.__dict__
+        ogp_title = __unicode__
+        
+        @models.permalink
+        def get_absolute_url(self):
+            return ('app:resource', [self.id,])
+        
+        def ogp_url(self):
+            return settings.BASE_URL + self.get_absolute_url()
+
+And so on.
 
 
 #### The discussion ####
