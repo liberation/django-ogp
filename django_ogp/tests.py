@@ -30,10 +30,16 @@ class OGPCompleteTestModel(OGPTestModel):
         return -122.153013
 
     def ogp_video_width(self):
-        return 1024
+        return ("video:width", 1024)
 
     def ogp_video_height(self):
-        return 800
+        return ("video:height", 800)
+
+    def ogp_site_name(self):
+        return "My Website"
+
+    def ogp_postal_code(self):
+        return ("postal-code", 13200)
 
 
 class OGPNoneTestModel(OGPTestModel):
@@ -52,7 +58,7 @@ class OGPTest(TestCase):
                         Template("{% load ogp_tags %}{% render_ogp item %}").render(Context({'item': TestModel()})))
         self.assertEqual(u'<meta property="og:url" content="http://www.imdb.com/title/tt0117500/" /><meta property="og:image" content="http://ia.media-imdb.com/images/rock.jpg" /><meta property="og:type" content="movie" /><meta property="og:title" content="The Rock" />', 
                         Template("{% load ogp_tags %}{% render_ogp item %}").render(Context({'item': OGPTestModel()})))
-        self.assertEqual(u'<meta property="og:title" content="The Rock" /><meta property="og:url" content="http://www.imdb.com/title/tt0117500/" /><meta property="og:image" content="http://ia.media-imdb.com/images/rock.jpg" /><meta property="og:longitude" content="-122.153013" /><meta property="og:video:height" content="800" /><meta property="og:video:width" content="1024" /><meta property="og:latitude" content="37.416343" /><meta property="og:type" content="movie" />', 
+        self.assertEqual(u'<meta property="og:site_name" content="My Website" /><meta property="og:title" content="The Rock" /><meta property="og:url" content="http://www.imdb.com/title/tt0117500/" /><meta property="og:image" content="http://ia.media-imdb.com/images/rock.jpg" /><meta property="og:longitude" content="-122.153013" /><meta property="og:video:height" content="800" /><meta property="og:video:width" content="1024" /><meta property="og:latitude" content="37.416343" /><meta property="og:postal-code" content="13200" /><meta property="og:type" content="movie" />', 
                         Template("{% load ogp_tags %}{% render_ogp item %}").render(Context({'item': OGPCompleteTestModel()})))
         self.assertEqual(u'<meta property="og:url" content="http://www.imdb.com/title/tt0117500/" /><meta property="og:image" content="http://ia.media-imdb.com/images/rock.jpg" /><meta property="og:type" content="movie" /><meta property="og:title" content="The Rock" />', 
                         Template("{% load ogp_tags %}{% render_ogp item %}").render(Context({'item': OGPNoneTestModel()})))

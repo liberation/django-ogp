@@ -64,10 +64,17 @@ you can add additionnal infos as suggested on
             return -122.153013
 
         def ogp_video_width(self):
-            return 1024
-
+          return ("video:width", 1024)
+        
         def ogp_video_height(self):
-            return 800
+            return ("video:height", 800)
+        
+        def ogp_site_name(self):
+            return "My Website"
+        
+        def ogp_postal_code(self):
+            return ("postal-code", 13200)
+
     
 Will produce:
 
@@ -82,10 +89,17 @@ Will produce:
       <meta property="og:latitude" content="37.416343" />
       <meta property="og:longitude" content="-122.153013" />
       <meta property="og:video:height" content="640" />
-      <meta property="og:video:width" content="385" />      
+      <meta property="og:video:width" content="385" />
+      <meta property="og:site_name" content="My Website" />
+      <meta property="og:postal-code" content="13200" />
     </head>
     <body>foo</body>
     </html>
+
+Note that due to inconsistencies in OGP's properties' names, we can't guess
+the property from the method name so you can return a tuple with a string
+as the first element which will be used for the property. Otherwise, the name
+of the method (minus ogp\_ will be used).
 
 Pro tip, you can probably reuse existing methods in your models:
 
