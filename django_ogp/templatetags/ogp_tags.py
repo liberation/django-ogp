@@ -20,7 +20,9 @@ def render_ogp(item):
     ogp_infos = {}
     for method in dir(item):
         if method.startswith('ogp_') and method!='ogp_enabled':
-            content = getattr(item, method)()
+            content = getattr(item, method)
+            if callable(content):
+                content = content() 
             if isinstance(content, tuple):
                 property_, content = content
             else:
