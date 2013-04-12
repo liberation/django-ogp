@@ -1,0 +1,8 @@
+include README.md
+include LICENSE.txt
+recursive-include docs *
+recursive-include django_ogp/fixtures *.json
+recursive-include django_ogp/locale *
+recursive-include django_ogp/static *
+recursive-include django_ogp/templates *.txt *.html *.xml *.js
+prune docs/build
